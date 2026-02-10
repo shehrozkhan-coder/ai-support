@@ -1,7 +1,11 @@
 import { cookies } from "next/headers";
-import { scalekit } from "./scalekit";
+import { getScalekit } from "@/lib/scalekit";
+
+
 
 export async function getSession() {
+    const scalekit = getScalekit()
+    
     const session = await cookies()
     const token = session.get("access_token")?.value
     if (!token){

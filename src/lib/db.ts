@@ -1,15 +1,19 @@
 import { connect } from "mongoose"
 
-const mongo_Url = process.env.MONGODB_URL
+// MONGODB_URL → MONGODB_URI (YE LINE CHANGE KARO)
+const mongo_Url = process.env.MONGODB_URI  // ✅ FIXED
+
 if(!mongo_Url){
     console.log("MongoDB URL not found, see db.ts file")
 }
+
 let cache = global.mongoose
+
 if(!cache){
   cache = global.mongoose={conn:null,promise:null}
 }
 
-const connectDb =async ()=> {
+const connectDb = async ()=> {
     if(cache.conn){
         return cache.conn
     }
@@ -23,4 +27,5 @@ const connectDb =async ()=> {
     }
     return cache.conn
 }
+
 export default connectDb
