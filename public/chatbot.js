@@ -1,6 +1,6 @@
 (function () {
   const api_Url = new URL(
-  "https://ai-customer-support-orpin-mu.vercel.app"
+  "https://ai-support-mauve.vercel.app"
 )
   const scriptTag = document.currentScript
   const ownerId = scriptTag.getAttribute("data-owner-id")
