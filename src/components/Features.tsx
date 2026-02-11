@@ -71,7 +71,7 @@ const router = useRouter()
               <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <Image src="/icon.png" alt="AI" width={36} height={36} />
-                  <span className="font-semibold">Support</span>
+                  <span className="font-semibold text-black">Support</span>
                   <span className="text-zinc-500">AI</span>
                 </div>
       

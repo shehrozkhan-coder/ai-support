@@ -23,7 +23,6 @@ import {
   Cell,
 } from "recharts";
 
-
 const lineData = [
   { day: "Mon", messages: 120 },
   { day: "Tue", messages: 210 },
@@ -61,13 +60,9 @@ const reveal: Variants = {
       ease: "easeOut", // ✅ TS-safe easing
     },
   }),
-}
-
-
-
+};
 
 const COLORS = ["#000000", "#52525b", "#a1a1aa"];
-
 
 /* ================= THEMES ================= */
 const CARD_THEMES = {
@@ -125,10 +120,9 @@ const DashboardClient = ({ ownerId }: { ownerId: string }) => {
       });
 
       setIsSaved(true);
-      setBusinessName("")
-    setSupportEmail("")
-    setKnowledge("")
-
+      setBusinessName("");
+      setSupportEmail("");
+      setKnowledge("");
     } catch (err) {
       console.error(err);
     } finally {
@@ -191,69 +185,200 @@ const DashboardClient = ({ ownerId }: { ownerId: string }) => {
       {/* ================= MAIN ================= */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* ================= LEFT ================= */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-10 shadow-xl">
-          <h1 className="text-2xl font-semibold mb-1 text-black">Chatbot Configuration</h1>
-          <p className="text-zinc-500 mb-10 text-black">
-            Configure how your AI represents your business
-          </p>
+        <div className="lg:col-span-2 bg-white rounded-3xl p-10 shadow-xl border border-zinc-100">
+          {/* Header Section */}
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold mb-2 text-black">
+              Chatbot Configuration
+            </h1>
+            <p className="text-zinc-600 text-base">
+              Configure how your AI represents your business
+            </p>
+          </div>
 
-          <div className="mb-8 space-y-4">
+          {/* Business Name Input */}
+          <div className="mb-6">
+            <label className="block text-sm font-semibold text-zinc-700 mb-2.5">
+              Business Name
+            </label>
             <input
               value={businessName}
               onChange={(e) => setBusinessName(e.target.value)}
-              placeholder="Business Name"
-              className="w-full rounded-xl border px-4 py-3"
+              placeholder="e.g., Acme Corporation"
+              className="
+        w-full rounded-xl border-2 border-zinc-200
+        px-5 py-3.5 text-base text-black
+        transition-all duration-200
+        focus:border-black focus:ring-4 focus:ring-black/5
+        hover:border-zinc-300
+        placeholder:text-zinc-400
+        outline-none
+      "
             />
+          </div>
 
+          {/* Support Email Input */}
+          <div className="mb-8">
+            <label className="block text-sm font-semibold text-zinc-700 mb-2.5">
+              Support Email
+            </label>
             <input
+              type="email"
               value={supportEmail}
               onChange={(e) => setSupportEmail(e.target.value)}
-              placeholder="Support Email"
-              className="w-full rounded-xl border px-4 py-3"
+              placeholder="support@yourbusiness.com"
+              className="
+        w-full rounded-xl border-2 border-zinc-200
+        px-5 py-3.5 text-base text-black
+        transition-all duration-200
+        focus:border-black focus:ring-4 focus:ring-black/5
+        hover:border-zinc-300
+        placeholder:text-zinc-400
+        outline-none
+      "
             />
           </div>
 
-          {/* KNOWLEDGE BASE */}
-          <div className="relative mb-10">
-            <textarea
-              value={knowledge}
-              onChange={(e) => {
-                setKnowledge(e.target.value);
-                e.currentTarget.style.height = "auto";
-                e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-              }}
-              rows={6}
-              placeholder={`Describe your business clearly so the AI can help customers.
+          {/* Knowledge Base Textarea */}
+          <div className="mb-10">
+            <label className="block text-sm font-semibold text-zinc-700 mb-2.5">
+              Knowledge Base
+            </label>
+            <div className="relative">
+              <textarea
+                value={knowledge}
+                onChange={(e) => {
+                  setKnowledge(e.target.value);
+                  e.currentTarget.style.height = "auto";
+                  e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                }}
+                rows={8}
+                placeholder={`Describe your business clearly so the AI can help customers.
 
 Include:
-• Services / products
-• Pricing or plans
-• Delivery & refunds
-• Working hours
+- Services / products you offer
+- Pricing or subscription plans
+- Delivery & refund policies
+- Working hours & contact info
 
 Example:
-"We run an online clothing store delivering across Pakistan."`}
-              className="
-                w-full rounded-2xl border px-5 py-4 text-sm
-                resize-none overflow-hidden
-                focus:ring-2 focus:ring-black/10
-              "
-            />
-            <div className="absolute bottom-3 right-4 text-[11px] text-zinc-400">
-              {knowledge.length} chars
+"We run an online clothing store delivering across Pakistan. We offer free delivery on orders above Rs. 2000. Refunds accepted within 7 days."`}
+                className="
+          w-full rounded-2xl border-2 border-zinc-200
+          px-5 py-4 text-base text-black leading-relaxed
+          resize-none overflow-hidden
+          transition-all duration-200
+          focus:border-black focus:ring-4 focus:ring-black/5
+          hover:border-zinc-300
+          placeholder:text-zinc-400
+          outline-none
+        "
+              />
+              <div
+                className="
+        absolute bottom-4 right-4 
+        text-xs text-zinc-500 
+        bg-zinc-50 px-2.5 py-1 rounded-lg
+        border border-zinc-200
+      "
+              >
+                {knowledge.length} characters
+              </div>
             </div>
+            <p className="text-xs text-zinc-500 mt-3 flex items-start gap-2">
+              <span className="text-base">💡</span>
+              <span>
+                The more detailed, the better your AI assistant will perform
+              </span>
+            </p>
           </div>
 
-          <motion.button
-            onClick={handleSettings}
-            disabled={!isValid || isSaving}
-            className="
-              px-8 py-3 rounded-xl text-white text-sm
-              bg-black disabled:bg-zinc-400 cursor-pointer
-            "
-          >
-            {isSaving ? "Saving…" : "Save"}
-          </motion.button>
+          {/* Save Button + Success Message */}
+          <div className="flex items-center gap-4 flex-wrap">
+            <motion.button
+              onClick={handleSettings}
+              disabled={!isValid || isSaving}
+              whileHover={{ scale: isValid && !isSaving ? 1.02 : 1 }}
+              whileTap={{ scale: isValid && !isSaving ? 0.98 : 1 }}
+              className="
+        px-10 py-4 rounded-xl
+        text-white text-base font-semibold
+        bg-gradient-to-r from-black to-zinc-800
+        disabled:from-zinc-300 disabled:to-zinc-400
+        disabled:cursor-not-allowed
+        cursor-pointer
+        shadow-lg shadow-black/20
+        transition-all duration-300
+        hover:shadow-xl hover:shadow-black/30
+        disabled:shadow-none
+        relative overflow-hidden
+      "
+            >
+              {isSaving ? (
+                <span className="flex items-center gap-2.5">
+                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                      fill="none"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Saving...
+                </span>
+              ) : (
+                "Save Configuration"
+              )}
+            </motion.button>
+
+            {/* Success Message */}
+            <AnimatePresence>
+              {isSaved && (
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  className="
+            flex items-center gap-2 
+            text-emerald-600 font-semibold
+            bg-emerald-50 px-4 py-2 rounded-lg
+            border border-emerald-200
+          "
+                >
+                  <VerifiedIcon size={20} />
+                  <span>Saved successfully!</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Validation Warning */}
+          <AnimatePresence>
+            {!isValid && (businessName || supportEmail || knowledge) && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="
+          mt-4 flex items-start gap-2
+          text-amber-700 text-sm
+          bg-amber-50 px-4 py-3 rounded-lg
+          border border-amber-200
+        "
+              >
+                <span className="text-lg">⚠️</span>
+                <span>Please fill all fields to save your configuration</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* ================= RIGHT ================= */}
@@ -364,156 +489,154 @@ Example:
 
       {/**================ANALYTICS=============== */}
 
-       <AnimatePresence>
-  <motion.section
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, margin: "-120px" }}
-    className="space-y-16"
-  >
-    {/* ================= KPIs ================= */}
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-      {[
-        { label: "Conversations", value: "1,284", color: "from-indigo-500" },
-        { label: "Users", value: "892", color: "from-emerald-500" },
-        { label: "Leads Captured", value: "146", color: "from-amber-500" },
-        { label: "Resolved", value: "91%", color: "from-sky-500" },
-      ].map((kpi, i) => (
-        <motion.div
-          key={i}
-          custom={i}
-          variants={reveal}
-          className="
+      <AnimatePresence>
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-120px" }}
+          className="space-y-16"
+        >
+          {/* ================= KPIs ================= */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              {
+                label: "Conversations",
+                value: "1,284",
+                color: "from-indigo-500",
+              },
+              { label: "Users", value: "892", color: "from-emerald-500" },
+              {
+                label: "Leads Captured",
+                value: "146",
+                color: "from-amber-500",
+              },
+              { label: "Resolved", value: "91%", color: "from-sky-500" },
+            ].map((kpi, i) => (
+              <motion.div
+                key={i}
+                custom={i}
+                variants={reveal}
+                className="
             relative overflow-hidden
             rounded-3xl bg-white p-6
             border shadow-sm
           "
-        >
-          {/* gradient accent */}
-          <div
-            className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${kpi.color} to-transparent`}
-          />
+              >
+                {/* gradient accent */}
+                <div
+                  className={`absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r ${kpi.color} to-transparent`}
+                />
 
-          <p className="text-sm text-zinc-500">{kpi.label}</p>
-          <p className="text-3xl font-semibold mt-2 tracking-tight">
-            {kpi.value}
-          </p>
-        </motion.div>
-      ))}
-    </div>
+                <p className="text-sm text-zinc-500">{kpi.label}</p>
+                <p className="text-3xl font-semibold mt-2 tracking-tight">
+                  {kpi.value}
+                </p>
+              </motion.div>
+            ))}
+          </div>
 
-    {/* ================= LINE CHART ================= */}
-    <motion.div
-      variants={reveal}
-      custom={4}
-      className="
+          {/* ================= LINE CHART ================= */}
+          <motion.div
+            variants={reveal}
+            custom={4}
+            className="
         rounded-[36px] bg-white p-10
         border shadow-sm
       "
-    >
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="font-semibold text-lg">Messages</h3>
-        <span className="text-xs text-zinc-500">Last 7 days</span>
-      </div>
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-semibold text-lg text-black">Messages</h3>
+              <span className="text-xs text-zinc-500">Last 7 days</span>
+            </div>
 
-      <div className="h-[320px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={lineData}>
-            <XAxis dataKey="day" stroke="#a1a1aa" />
-            <YAxis stroke="#a1a1aa" />
-            <Tooltip />
-            <Line
-              type="monotone"
-              dataKey="messages"
-              stroke="#111"
-              strokeWidth={3}
-              dot={{ r: 4, fill: "#111" }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </motion.div>
+            <div className="h-[320px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={lineData}>
+                  <XAxis dataKey="day" stroke="#a1a1aa" />
+                  <YAxis stroke="#a1a1aa" />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="messages"
+                    stroke="#111"
+                    strokeWidth={3}
+                    dot={{ r: 4, fill: "#111" }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </motion.div>
 
-    {/* ================= BOTTOM GRID ================= */}
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Top Pages */}
-      <motion.div
-        variants={reveal}
-        custom={5}
-        className="rounded-[36px] bg-white p-8 border shadow-sm"
-      >
-        <h3 className="font-semibold mb-6">Top Pages</h3>
+          {/* ================= BOTTOM GRID ================= */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Top Pages */}
+            <motion.div
+              variants={reveal}
+              custom={5}
+              className="rounded-[36px] bg-white p-8 border shadow-sm"
+            >
+              <h3 className="font-semibold mb-6 text-black">Top Pages</h3>
 
-        <div className="h-[260px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={pageData}>
-              <XAxis dataKey="page" stroke="#a1a1aa" />
-              <YAxis stroke="#a1a1aa" />
-              <Tooltip />
-              <Bar
-                dataKey="hits"
-                fill="#111"
-                radius={[10, 10, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </motion.div>
+              <div className="h-[260px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={pageData}>
+                    <XAxis dataKey="page" stroke="#a1a1aa" />
+                    <YAxis stroke="#a1a1aa" />
+                    <Tooltip />
+                    <Bar dataKey="hits" fill="#111" radius={[10, 10, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </motion.div>
 
-      {/* Intent Distribution */}
-      <motion.div
-        variants={reveal}
-        custom={6}
-        className="
+            {/* Intent Distribution */}
+            <motion.div
+              variants={reveal}
+              custom={6}
+              className="
           rounded-[36px] bg-white p-8
           border shadow-sm lg:col-span-2
         "
-      >
-        <h3 className="font-semibold mb-6">User Intent</h3>
+            >
+              <h3 className="font-semibold mb-6 text-black">User Intent</h3>
 
-        <div className="h-[280px] flex items-center gap-12">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={intentData}
-                dataKey="value"
-                innerRadius={80}
-                outerRadius={115}
-                paddingAngle={6}
-              >
-                {intentData.map((_, i) => (
-                  <Cell key={i} fill={COLORS[i]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+              <div className="h-[280px] flex items-center gap-12">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={intentData}
+                      dataKey="value"
+                      innerRadius={80}
+                      outerRadius={115}
+                      paddingAngle={6}
+                    >
+                      {intentData.map((_, i) => (
+                        <Cell key={i} fill={COLORS[i]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                  </PieChart>
+                </ResponsiveContainer>
 
-          <div className="space-y-4">
-            {intentData.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-3 text-sm"
-              >
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ background: COLORS[i] }}
-                />
-                <span className="text-zinc-600">
-                  {item.name}
-                </span>
-                <span className="ml-auto font-semibold text-zinc-900">
-                  {item.value}%
-                </span>
+                <div className="space-y-4">
+                  {intentData.map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 text-sm">
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: COLORS[i] }}
+                      />
+                      <span className="text-zinc-600">{item.name}</span>
+                      <span className="ml-auto font-semibold text-zinc-900">
+                        {item.value}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
+            </motion.div>
           </div>
-        </div>
-      </motion.div>
-    </div>
-  </motion.section>
-</AnimatePresence>
-
+        </motion.section>
+      </AnimatePresence>
 
       <motion.footer
         initial={{ opacity: 0, y: 24 }}
