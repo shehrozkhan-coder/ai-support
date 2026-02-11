@@ -156,7 +156,7 @@ const DashboardClient = ({ ownerId }: { ownerId: string }) => {
             onClick={() => router.push("/")}
             className="cursor-pointer flex gap-1"
           >
-            <span className="font-semibold">Support</span>
+            <span className="font-semibold text-black">Support</span>
             <span className="text-zinc-500">AI</span>
           </div>
         </div>
@@ -192,8 +192,8 @@ const DashboardClient = ({ ownerId }: { ownerId: string }) => {
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* ================= LEFT ================= */}
         <div className="lg:col-span-2 bg-white rounded-3xl p-10 shadow-xl">
-          <h1 className="text-2xl font-semibold mb-1">Chatbot Configuration</h1>
-          <p className="text-zinc-500 mb-10">
+          <h1 className="text-2xl font-semibold mb-1 text-black">Chatbot Configuration</h1>
+          <p className="text-zinc-500 mb-10 text-black">
             Configure how your AI represents your business
           </p>
 
