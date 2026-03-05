@@ -129,6 +129,7 @@ ANSWER
 
     return response
   } catch (error) {
+    console.error("CHAT API ERROR:", error)
     const response = NextResponse.json(
       { message: `chat error ${error}` },
       { status: 500 }
